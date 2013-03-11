@@ -30,4 +30,4 @@ The RazorShoulds is using RazorTemplates for rendering and RazorTemplates is tes
 rendered files the /rendered/ folder.
 4. Check the results, optionally edit them, and move to the /approved/ folder. 
 5. Change your cshtml's to get the right results.
-6. Open the /tests url again to re-run testrunner.
+6. Open the /tests url again to re-run testrunner - now it checks the results against the files in /approved/ folder.
