@@ -6,9 +6,9 @@
 }
 
 @if(templateModel.TestResult.Success) {
-<h2 class="success">@templateModel.Description</h2>
+<h2 class="success">@templateModel.Description (OK)</h2>
 } else {    
-<h2 class="error">@templateModel.Description</h2>
+<h2 class="error">@templateModel.Description (FAILED)</h2>
 <strong>@templateModel.TestResult.Message</strong>
 }
 @*@templateModel.TestResult.AdditionalMessage

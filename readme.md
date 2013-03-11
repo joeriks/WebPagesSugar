@@ -1,7 +1,7 @@
 #WebPagesSugar
 (version 0.5 work in progress)
 
-The RazorShoulds is using RazorTemplates for rendering and RazorTemplates is tested with RazorShoulds :)
+The RazorShoulds is using RazorTemplates for rendering and RazorTemplates is tested with RazorShoulds
 
 ##RazorTemplates - nice convention based templating
 
@@ -24,10 +24,19 @@ The RazorShoulds is using RazorTemplates for rendering and RazorTemplates is tes
 
 ##RazorShoulds - tiny web based testrunner with approval tests features
 
-1. Add your .cshtml files to a /tests folder (like in the samples project) give them descriptive names (can have spaces)
+1. Add your .cshtml files to a /tests folder (like in the samples project). Give them descriptive names.
 2. And open the /tests url to start the runner. 
-3. The testrunner renders each .cshtml in the folder and "says approval files missing". The testrunner saves the 
-rendered files the /rendered/ folder.
+3. The testrunner renders each .cshtml in the folder and says "approval files missing". The testrunner saves the 
+rendered files for verification in the /rendered/ folder.
 4. Check the results, optionally edit them, and move to the /approved/ folder. 
 5. Change your cshtml's to get the right results.
 6. Open the /tests url again to re-run testrunner - now it checks the results against the files in /approved/ folder.
+
+    Sample testresults:
+    Approval tests on all files in folder
+    File: Basic samples (OK)
+    File: Header as h1 (OK)
+    File: Missing template (OK)
+    File: Test without approval file (FAILED)
+    No approval file exists, check folder /rendered/ and and move to /approved/ after they have been approved
+    File: Type template (OK)
