@@ -1,0 +1,17 @@
+﻿@using RazorTemplates
+
+@{
+    var templateModel = PageData[0] as RazorShoulds.ShouldModule.ShouldDescription;
+    var tmpl = new Templates("");
+}
+
+@if(templateModel.TestResult.Success) {
+<h2 class="success">@templateModel.Description</h2>
+} else {    
+<h2 class="error">@templateModel.Description</h2>
+<strong>@templateModel.TestResult.Message</strong>
+}
+@*@templateModel.TestResult.AdditionalMessage
+
+@tmpl.Render(templateModel.ExpectedResult)
+@tmpl.Render(templateModel.TestResult.ActualResult)*@

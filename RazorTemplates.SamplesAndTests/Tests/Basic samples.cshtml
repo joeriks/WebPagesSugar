@@ -1,0 +1,16 @@
+﻿@using RazorTemplates
+
+@{
+    var tmpl = new Templates();
+    dynamic dynamicTemplate = tmpl;
+    var someObject = new MyNameValueType{ Name = "Foo", Value = "Bar" };
+  }
+
+@tmpl.Render("CustomHeader", someObject.Name)
+@* renders /templates/CustomHeader.cshtml *@
+
+@tmpl.Render(someObject);
+@* renders /templates/CustomHeader.cshtml *@
+
+@dynamicTemplate.CustomHeader(someObject.Name)
+@* renders /templates/MyNameValueType.cshtml *@

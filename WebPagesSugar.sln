@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorShoulds", "RazorShoulds\RazorShoulds.csproj", "{03C345C3-FBC9-4DC3-97F2-90A223195D05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorTemplates.Core", "RazorTemplates.Core\RazorTemplates.Core.csproj", "{FAF15A0A-FD00-4DFE-9D70-D164385AE869}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorTemplates.SamplesAndTests", "RazorTemplates.SamplesAndTests\RazorTemplates.SamplesAndTests.csproj", "{6836F541-F3EB-40FB-A391-2377164F444F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{03C345C3-FBC9-4DC3-97F2-90A223195D05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03C345C3-FBC9-4DC3-97F2-90A223195D05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03C345C3-FBC9-4DC3-97F2-90A223195D05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03C345C3-FBC9-4DC3-97F2-90A223195D05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAF15A0A-FD00-4DFE-9D70-D164385AE869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAF15A0A-FD00-4DFE-9D70-D164385AE869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAF15A0A-FD00-4DFE-9D70-D164385AE869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAF15A0A-FD00-4DFE-9D70-D164385AE869}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6836F541-F3EB-40FB-A391-2377164F444F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6836F541-F3EB-40FB-A391-2377164F444F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6836F541-F3EB-40FB-A391-2377164F444F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6836F541-F3EB-40FB-A391-2377164F444F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

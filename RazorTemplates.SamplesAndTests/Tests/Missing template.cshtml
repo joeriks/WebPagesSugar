@@ -1,0 +1,5 @@
+﻿@using RazorTemplates
+@{dynamic tmpl = new Templates("templates");}
+@tmpl.Render("missing")
+
+@* This should show "Local missing template" from /templates/_defaultTemplate.cshtml *@

@@ -1,0 +1,10 @@
+﻿@using RazorTemplates
+@{var t = new Templates("");
+
+  var typedModel = PageData[0] as RazorShoulds.ShouldModule;
+  
+  }
+
+
+@t.Render("Header",typedModel.Description)
+@t.RenderEach(typedModel.Shoulds)

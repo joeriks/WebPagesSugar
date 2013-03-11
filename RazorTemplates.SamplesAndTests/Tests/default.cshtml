@@ -1,0 +1,14 @@
+﻿@using RazorShoulds
+@using RazorTemplates
+@{
+    var t = new Templates("/testrunner");
+    var m = new ShouldModule("Approval tests on all files in folder");
+    
+    m.ShouldApproveAll();    
+    m.Test();
+    
+}
+
+<link href="../testrunner.css" rel="stylesheet" />
+
+@t.Render(m)

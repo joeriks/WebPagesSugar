@@ -1,0 +1,5 @@
+﻿@using RazorTemplates
+@{var tmpl = new Templates("templates");}
+@tmpl.Render(new DateTime(2000,1,1))
+
+@* This should render to 2000-01-01 with the help of the datetime template *@
