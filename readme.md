@@ -33,10 +33,11 @@ rendered files for verification in the /rendered/ folder.
 6. Open the /tests url again to re-run testrunner - now it checks the results against the files in /approved/ folder.
 
     Sample testresults:
-    Approval tests on all files in folder
-    File: Basic samples (OK)
-    File: Header as h1 (OK)
-    File: Missing template (OK)
-    File: Test without approval file (FAILED)
-    No approval file exists, check folder /rendered/ and and move to /approved/ after they have been approved
+
+    Approval tests on all files in folder  
+    File: Basic samples (OK)  
+    File: Header as h1 (OK)  
+    File: Missing template (OK)  
+    File: Test without approval file (FAILED)  
+    No approval file exists, check folder /rendered/ and and move to /approved/ after they have been approved  
     File: Type template (OK)
