@@ -4,6 +4,7 @@
     var tmpl = new Templates();
     dynamic dynamicTemplate = tmpl;
     var someObject = new MyNameValueType{ Name = "Foo", Value = "Bar" };
+    dynamic dynamicTemplateWithModel = new Templates(someObject);
   }
 
 @tmpl.Render("CustomHeader", someObject.Name)
@@ -14,3 +15,6 @@
 
 @dynamicTemplate.CustomHeader(someObject.Name)
 @* renders /templates/CustomHeader.cshtml *@
+
+@dynamicTemplateWithModel.Name
+@* renders /templates/Name.cshtml *@
