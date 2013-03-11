@@ -49,45 +49,73 @@ namespace RazorTemplates
     {
         private System.Web.WebPages.WebPageRenderingBase page;
         private HtmlHelper htmlHelper;
-        private string defaultRootPath = "~/templates";
 
-        private string appendExtension = ".cshtml";
-        private string[] propertiesAsTemplateNames = new[] { "NodeTypeAlias", "Alias" };
-        private string templatePath;
-        private string[] fallbackTemplatePaths = new[] { "~/templates/shared/" };
-        private string fallbackFileName = "_defaultTemplate";
-        private bool useFallbacks = true;
-        private string currentPath;
-        private bool useMvc;
-        private Func<string, object, HelperResult> renderer;
-        private Func<dynamic, string> typeNameResolver;
-        private object dynamicModel;
-        public Dictionary<string, string> TagTemplates = new Dictionary<string, string>();
-
-        public Templates(HtmlHelper htmlHelper, string templatePath, string rootPath, string currentPath, Func<string, object, HelperResult> renderer, Func<dynamic, string> typeNameResolver)
+        public class TemplatesSettings
         {
-            this.htmlHelper = htmlHelper;
-            this.useMvc = true;
-            this.defaultRootPath = rootPath;
-            this.currentPath = currentPath;
-            this.renderer = renderer;
-            this.typeNameResolver = typeNameResolver;
-            setTemplatePath(templatePath);
+            public string DefaultRootPath { get; set; }
+            public string AppendExtension { get; set; }
+            public string[] PropertiesAsTemplateNames { get; set; }
+            public string[] FallbackTemplatePaths { get; set; }
+            public string FallbackFileName { get; set; }
+            public bool UseFallbacks { get; set; }
+            public Func<dynamic, string> TypeNameResolver { get; set; }
+            public string TemplatePath { get; set; }
+
         }
+        public TemplatesSettings Settings
+        {
+            get { return settings; }
+            set { settings = value; }
+        }
+
+        private void baseSettingsOnContextGuess()
+        {
+            var virtualPath = page.VirtualPath;
+            if (virtualPath.StartsWith("~/razor"))
+            {
+                Settings.DefaultRootPath = "~/razor/";
+                Settings.FallbackTemplatePaths = new[] { "~/razor/shared/" };
+                return;
+            }
+            if (virtualPath.StartsWith("~/macroScripts"))
+            {
+                Settings.DefaultRootPath = "~/macroScripts/";
+                Settings.FallbackTemplatePaths = new[] { "~/macroScripts/shared/" };
+                return;
+            }
+        }
+
+        private TemplatesSettings settings = new TemplatesSettings
+        {
+            DefaultRootPath = "~/templates",
+            AppendExtension = ".cshtml",
+            PropertiesAsTemplateNames = null,
+            FallbackTemplatePaths = new[] { "~/templates/shared/" },
+            FallbackFileName = "_defaultTemplate",
+            UseFallbacks = true,
+            TypeNameResolver = new Func<dynamic, string>(value => value.GetType().Name),
+            TemplatePath = null
+        };
+
+        private string currentPath;
+        private Func<string, object, HelperResult> renderer;
+        private object dynamicModel;
+
         private void setTemplatePath(string templatePath)
         {
             if (templatePath != "")
             {
                 var currentPath = VirtualPathUtility.GetDirectory(page.VirtualPath);
-                if (VirtualPathUtility.IsAbsolute(templatePath)) templatePath = defaultRootPath + templatePath;
+                if (VirtualPathUtility.IsAbsolute(templatePath)) templatePath = settings.DefaultRootPath + templatePath;
                 templatePath = VirtualPathUtility.AppendTrailingSlash(templatePath);
             }
-            this.templatePath = templatePath;
+            settings.TemplatePath = templatePath;
 
         }
         private void initialize(string templatePath, object dynamicModel = null, string fallbackTemplatePath = "/shared")
         {
             page = System.Web.WebPages.WebPageContext.Current.Page;
+            baseSettingsOnContextGuess();
             setTemplatePath(templatePath);
 
             if (dynamicModel != null)
@@ -142,7 +170,6 @@ namespace RazorTemplates
             var page = WebPageContext.Current.Page.Page;
             if (page.TemplatePath != null) { templatePath = page.TemplatePath; }
 
-            //if (args.Length==1 && args[0] is string) return templates.Render((string)args[0]);
             if (page.CurrentTemplates == null || WebPageContext.Current.Page.Page.TemplatePath != templatePath)
             {
                 page.TemplatePath = templatePath;
@@ -173,7 +200,7 @@ namespace RazorTemplates
                 model = args[0];
             }
 
-            var template = templatePath + templateName + appendExtension;
+            var template = settings.TemplatePath + templateName + settings.AppendExtension;
 
             if (renderer != null)
             {
@@ -183,12 +210,10 @@ namespace RazorTemplates
                     return renderer(template, args[0]);
             }
 
-            if (useFallbacks)
+            if (settings.UseFallbacks)
             {
                 return RenderWithFallbacks(template, templateName, model);
             }
-
-            //var verifiedPath = tryFindVirtualFileWithFallbacks(template, templateName);
 
             return page.RenderPage(template, model);
 
@@ -197,7 +222,7 @@ namespace RazorTemplates
         {
             get
             {
-                return WebPageContext.Current.Page.Page.PageData[0];
+                return WebPageContext.Current.Page.PageData[0];
             }
         }
         private bool TryRender(string path, object model, out HelperResult result)
@@ -229,20 +254,20 @@ namespace RazorTemplates
             var notFoundPaths = new List<string>();
             notFoundPaths.Add(path);
 
-            foreach (var fallbackPath in fallbackTemplatePaths)
+            foreach (var fallbackPath in settings.FallbackTemplatePaths)
             {
-                path = fallbackPath + templateName + appendExtension;
+                path = fallbackPath + templateName + settings.AppendExtension;
                 if (TryRender(path, model, out result)) return result;
                 notFoundPaths.Add(path);
             }
 
-            path = templatePath + fallbackFileName + appendExtension;
+            path = settings.TemplatePath + settings.FallbackFileName + settings.AppendExtension;
             if (TryRender(path, model, out result)) return result;
             notFoundPaths.Add(path);
 
-            foreach (var fallbackPath in fallbackTemplatePaths)
+            foreach (var fallbackPath in settings.FallbackTemplatePaths)
             {
-                path = fallbackPath + fallbackFileName + appendExtension;
+                path = fallbackPath + settings.FallbackFileName + settings.AppendExtension;
                 if (TryRender(path, model, out result)) return result;
                 notFoundPaths.Add(path);
             }
@@ -289,13 +314,8 @@ namespace RazorTemplates
         }
         private string resolveTemplateName(dynamic value)
         {
-            if (typeNameResolver != null)
-                return typeNameResolver(value);
-            //foreach (var propertyName in propertiesAsTemplateNames)
-            //{
-            //    var tryGetNodeTypeAlias = value.GetType().GetProperty(propertyName);
-            //    if (tryGetNodeTypeAlias != null) return tidyName(tryGetNodeTypeAlias.GetValue(value, null).ToString());
-            //}
+            if (settings.TypeNameResolver != null)
+                return settings.TypeNameResolver(value);
 
             return value.GetType().Name;
         }
@@ -321,11 +341,9 @@ namespace RazorTemplates
 
         }
 
-        //public System.Web.WebPages.HelperResult Render(dynamic value)
-        //{
-        //    var templateName = resolveTemplateName(value);
-        //    return Render(templateName, new[] { value });
-        //}
+        //
+        // Pass-through function to make template parameters simpler in razor
+        //
         public static Func<object, HelperResult> ItemTemplate(Func<object, HelperResult> template) { return template; }
 
         private static List<Func<object, HelperResult>> getItemTemplates()
@@ -380,25 +398,24 @@ namespace RazorTemplates
         public override bool TryGetMember(System.Dynamic.GetMemberBinder binder, out object result)
         {
 
+
             if (dynamicModel != null)
             {
-                //if (dynamicModel is umbraco.MacroEngines.DynamicNode)
-                //{
-                //    var model = dynamicModel as umbraco.MacroEngines.DynamicNode;
-                //    var tryGetMember = model.TryGetMember(binder, out result);
-                //    if (tryGetMember)
-                //    {
-                //        result = Render(binder.Name, new[] { result });
-                //        return true;
-                //    }
-                //}
+                if ((dynamicModel).GetType().IsSubclassOf(typeof(System.Dynamic.DynamicObject)))
+                {
+                    var model =  dynamicModel as System.Dynamic.DynamicObject;
+                    var tryGetMember = model.TryGetMember(binder, out result);
+                    if (tryGetMember)
+                    {
+                        result = Render(binder.Name, result );
+                        return true;
+                    }
+                }
+
                 if (dynamicModel is System.Dynamic.ExpandoObject)
                 {
                     var dynamicModelAsDictionary = (IDictionary<string, object>)dynamicModel;
                     var item = dynamicModelAsDictionary[binder.Name];
-
-
-
                 }
                 var property = dynamicModel.GetType().GetProperty(binder.Name);
                 if (property != null)
