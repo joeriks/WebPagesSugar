@@ -14,7 +14,9 @@ The RazorShoulds is using RazorTemplates for rendering and RazorTemplates is tes
 	  }
 
 	@tmpl.Render("CustomHeader", someObject.Name)
->>renders /templates/CustomHeader.cshtml
+>>renders /templates/CustomHeader.cshtml which should render PageData[0] somewhere:
+
+	<h1>@PageData[0]</h1>
 
 	@tmpl.Render(someObject);
 >>renders /templates/MyNameValueType.cshtml
@@ -29,9 +31,9 @@ The RazorShoulds is using RazorTemplates for rendering and RazorTemplates is tes
 	@tmpl.BodyText
 >>renders /templates/BodyText.cshtml
 
-Everything falls back to [/shared/{templatename}, _defaultTemplate.cshtml, /shared/_defaultTemplate.cshtml] if the requested template does not exist.
+Everything falls back to 1) /shared/{templatename}, 2) _defaultTemplate.cshtml, 3) /shared/_defaultTemplate.cshtml if the requested template does not exist.
 
-In Umbraco the default template locations is /macroScripts/ and /macroScripts/shared/
+In Umbraco the default template locations are /macroScripts/ and /macroScripts/shared/
 
 ##RazorShoulds - tiny web based testrunner with approval tests features
 
