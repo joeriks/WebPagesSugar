@@ -117,8 +117,8 @@ namespace RazorShoulds
             if (!Directory.Exists(approvedPath)) Directory.CreateDirectory(approvedPath);
             if (!Directory.Exists(renderedPath)) Directory.CreateDirectory(renderedPath);
 
-            var approvedFileName = approvedPath + fileName + ".html";
-            var renderedFileName = renderedPath + fileName + ".html";
+            var approvedFileName = approvedPath + fileName + ".cshtml";
+            var renderedFileName = renderedPath + fileName + ".cshtml";
 
             string actualResult = null;
             string approvedResult = null;

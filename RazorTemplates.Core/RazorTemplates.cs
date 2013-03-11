@@ -71,13 +71,13 @@ namespace RazorTemplates
         private void baseSettingsOnContextGuess()
         {
             var virtualPath = page.VirtualPath;
-            if (virtualPath.StartsWith("~/razor"))
+            if (virtualPath.StartsWith("~/razor", StringComparison.CurrentCultureIgnoreCase))
             {
                 Settings.DefaultRootPath = "~/razor/";
                 Settings.FallbackTemplatePaths = new[] { "~/razor/shared/" };
                 return;
             }
-            if (virtualPath.StartsWith("~/macroScripts"))
+            if (virtualPath.StartsWith("~/macroScripts", StringComparison.CurrentCultureIgnoreCase))
             {
                 Settings.DefaultRootPath = "~/macroScripts/";
                 Settings.FallbackTemplatePaths = new[] { "~/macroScripts/shared/" };
@@ -403,11 +403,11 @@ namespace RazorTemplates
             {
                 if ((dynamicModel).GetType().IsSubclassOf(typeof(System.Dynamic.DynamicObject)))
                 {
-                    var model =  dynamicModel as System.Dynamic.DynamicObject;
+                    var model = dynamicModel as System.Dynamic.DynamicObject;
                     var tryGetMember = model.TryGetMember(binder, out result);
                     if (tryGetMember)
                     {
-                        result = Render(binder.Name, result );
+                        result = Render(binder.Name, result);
                         return true;
                     }
                 }
