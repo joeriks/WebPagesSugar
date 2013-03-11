@@ -22,6 +22,17 @@ The RazorShoulds is using RazorTemplates for rendering and RazorTemplates is tes
 	@dynamicTemplate.CustomHeader(someObject.Name)
 >>renders /templates/CustomHeader.cshtml
 
+###Model based dynamic sugar
+	@{
+		dynamic tmpl = new Templates(Model);
+	}
+	@tmpl.BodyText
+>>renders /templates/BodyText.cshtml
+
+Everything falls back to [/shared/{templatename}, _defaultTemplate.cshtml, /shared/_defaultTemplate.cshtml] if the requested template does not exist.
+
+In Umbraco the default template locations is /macroScripts/ and /macroScripts/shared/
+
 ##RazorShoulds - tiny web based testrunner with approval tests features
 
 1. Add your .cshtml files to a /tests folder (like in the samples project). Give them descriptive names.
