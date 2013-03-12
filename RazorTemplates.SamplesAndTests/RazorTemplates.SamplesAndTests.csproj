@@ -59,10 +59,6 @@
   <ItemGroup>
     <Content Include="sample.css" />
     <Content Include="testrunner.css" />
-    <Content Include="Tests\approved\Header as h1.html" />
-    <Content Include="Tests\approved\Type template.html" />
-    <Content Include="Tests\rendered\Header as h1.html" />
-    <Content Include="Tests\rendered\Type template.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -84,11 +80,12 @@
     <Content Include="templates\testrunner\ShouldModule.cshtml" />
     <Content Include="templates\testrunner\Header.cshtml" />
     <Content Include="Tests\Basic samples.cshtml" />
-    <Content Include="templates\shared\MainHeader.cshtml" />
+    <Content Include="templates\shared\CustomHeader.cshtml" />
     <Content Include="templates\shared\Header.cshtml" />
     <Content Include="templates\shared\BodyText.cshtml" />
     <Content Include="templates\shared\CustomProperty.cshtml" />
     <Content Include="othersample.cshtml" />
+    <Content Include="templates\shared\SampleModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -106,7 +103,10 @@
       <Name>RazorTemplates.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Tests\approved\" />
+    <Folder Include="Tests\rendered\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
