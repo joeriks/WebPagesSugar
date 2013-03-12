@@ -1,0 +1,31 @@
+﻿body {
+    font-family: Verdana, Geneva, 'DejaVu Sans', sans-serif;
+}
+
+h1 {
+    color: brown;
+}
+
+.box {
+    border: 1px solid silver;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.bodyText {
+    font-size: 0.8em;
+    color: blue;
+}
+
+.nameValue {
+    background-color: lightblue;
+    padding: 5px;
+    font-size: 0.8em;
+}
+
+.sampleBox {
+    margin-left: 100px;
+    border: 1px solid silver;
+    padding: 10px;
+    margin-bottom: 10px;
+}

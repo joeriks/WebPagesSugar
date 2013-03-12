@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sample.css" />
     <Content Include="testrunner.css" />
     <Content Include="Tests\approved\Header as h1.html" />
     <Content Include="Tests\approved\Type template.html" />
@@ -66,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Code\MyNameValueType.cs" />
+    <Content Include="App_Code\SampleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,8 +84,11 @@
     <Content Include="templates\testrunner\ShouldModule.cshtml" />
     <Content Include="templates\testrunner\Header.cshtml" />
     <Content Include="Tests\Basic samples.cshtml" />
-    <Content Include="templates\CustomHeader.cshtml" />
-    <Content Include="templates\MyNameValueType.cshtml" />
+    <Content Include="templates\shared\MainHeader.cshtml" />
+    <Content Include="templates\shared\Header.cshtml" />
+    <Content Include="templates\shared\BodyText.cshtml" />
+    <Content Include="templates\shared\CustomProperty.cshtml" />
+    <Content Include="othersample.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

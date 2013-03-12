@@ -1,8 +1,61 @@
-﻿This is a sample project for RazorTemplates and RazorShoulds
-
-<a href="Tests/">Tests/</a>
-@{
-
-    var r = this.PageContext.Page.VirtualPath
-    
+﻿@{
+    var model = FakeRepository.GetModel();
+    dynamic tmpl = new RazorTemplates.Templates(model);
 }
+
+<link href="../sample.css" rel="stylesheet" />
+
+<h1>@tmpl.Header(model.Header)</h1>
+
+Initialize template: with model or without
+<pre>
+    @@{
+        var model = FakeRepository.GetModel();
+        //dynamic tmpl = new RazorTemplates.Templates();
+        dynamic tmpl = new RazorTemplates.Templates(model);
+    }</pre>
+
+Specify template path if necessary:
+<pre>
+    //dynamic tmpl = new RazorTemplates.Templates("/myPath",model);
+    //dynamic useCurrentPath = new RazorTemplates.Templates("");
+    //dynamic usePathRelativeToTemplateRoot = new RazorTemplates.Templates("/myPath");
+    //dynamic usePathRelativeToCurrentPath = new RazorTemplates.Templates("myPath");
+    //dynamic usePathRelativeToAppRoot = new RazorTemplates.Templates("~/myPath");
+</pre>
+
+Render templates - using property names to get template names (filenames):
+<pre>
+    @@tmpl.Header
+</pre>
+
+
+Or use Render method explicitly:
+<pre>
+    @@tmpl.Render("Header",model.Header)
+</pre>
+
+Or use template name as method name:
+<pre>
+    @@tmpl.Header("Some header")
+</pre>
+
+<pre>
+    @@tmpl.Header
+    @@tmpl.BodyText
+    @@tmpl.CustomProperty
+</pre>
+
+<div class="sampleBox">
+@tmpl.Header
+@tmpl.BodyText
+@tmpl.CustomProperty
+    </div>
+<hr />
+Or render the full model - using type name to get template name (filename):
+<pre>
+    @@tmpl.Render(model)
+</pre>
+<div class="sampleBox">
+@tmpl.Render(model)
+</div>

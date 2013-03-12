@@ -1,0 +1,8 @@
+﻿@{var templateModel = (CustomType)PageData[0];}
+@if (templateModel != null)
+{
+    <div class="nameValue">
+        <b>@templateModel.Name:</b>
+        @templateModel.Value
+    </div>
+}

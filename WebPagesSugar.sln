@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorTemplates.Core", "Razo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RazorTemplates.SamplesAndTests", "RazorTemplates.SamplesAndTests\RazorTemplates.SamplesAndTests.csproj", "{6836F541-F3EB-40FB-A391-2377164F444F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.RazorTemplates", "Our.Umbraco.RazorTemplates\Our.Umbraco.RazorTemplates.csproj", "{B417443E-DCFB-46CA-9B02-6D568D38C326}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{6836F541-F3EB-40FB-A391-2377164F444F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6836F541-F3EB-40FB-A391-2377164F444F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6836F541-F3EB-40FB-A391-2377164F444F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B417443E-DCFB-46CA-9B02-6D568D38C326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B417443E-DCFB-46CA-9B02-6D568D38C326}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B417443E-DCFB-46CA-9B02-6D568D38C326}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B417443E-DCFB-46CA-9B02-6D568D38C326}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

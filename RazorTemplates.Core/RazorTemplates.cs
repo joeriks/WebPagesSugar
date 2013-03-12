@@ -48,7 +48,6 @@ namespace RazorTemplates
     public class Templates : System.Dynamic.DynamicObject
     {
         private System.Web.WebPages.WebPageRenderingBase page;
-        private HtmlHelper htmlHelper;
 
         public class TemplatesSettings
         {
@@ -60,6 +59,8 @@ namespace RazorTemplates
             public bool UseFallbacks { get; set; }
             public Func<dynamic, string> TypeNameResolver { get; set; }
             public string TemplatePath { get; set; }
+            public string RazorTemplateDebugMessages { get; set; }
+
 
         }
         public TemplatesSettings Settings
@@ -94,10 +95,10 @@ namespace RazorTemplates
             FallbackFileName = "_defaultTemplate",
             UseFallbacks = true,
             TypeNameResolver = new Func<dynamic, string>(value => value.GetType().Name),
-            TemplatePath = null
+            TemplatePath = null,
+            RazorTemplateDebugMessages = "RazorTemplateDebugMessages"
         };
 
-        private string currentPath;
         private Func<string, object, HelperResult> renderer;
         private object dynamicModel;
 
@@ -244,6 +245,18 @@ namespace RazorTemplates
             return false;
 
         }
+
+        private void addRazorTemplatesNotFoundPaths(string information)
+        {
+            information += "<br/>";
+            if (page.PageData[Settings.RazorTemplateDebugMessages] == null)
+            {
+                page.PageData[Settings.RazorTemplateDebugMessages] = information;
+                return;
+            }
+            page.PageData[Settings.RazorTemplateDebugMessages] += information;
+            return;
+        }
         private HelperResult RenderWithFallbacks(string template, string templateName, object model)
         {
             var path = template;
@@ -253,45 +266,33 @@ namespace RazorTemplates
 
             var notFoundPaths = new List<string>();
             notFoundPaths.Add(path);
+            addRazorTemplatesNotFoundPaths("<strong>Template '" + templateName + "', searched paths:</strong>");
+            addRazorTemplatesNotFoundPaths(path);
 
             foreach (var fallbackPath in settings.FallbackTemplatePaths)
             {
                 path = fallbackPath + templateName + settings.AppendExtension;
                 if (TryRender(path, model, out result)) return result;
                 notFoundPaths.Add(path);
+                addRazorTemplatesNotFoundPaths(path);
             }
 
             path = settings.TemplatePath + settings.FallbackFileName + settings.AppendExtension;
             if (TryRender(path, model, out result)) return result;
             notFoundPaths.Add(path);
+            addRazorTemplatesNotFoundPaths(path);
 
             foreach (var fallbackPath in settings.FallbackTemplatePaths)
             {
                 path = fallbackPath + settings.FallbackFileName + settings.AppendExtension;
                 if (TryRender(path, model, out result)) return result;
                 notFoundPaths.Add(path);
+                addRazorTemplatesNotFoundPaths(path);
             }
             return new HelperResult((writer) =>
             {
                 throw new Exception("Template not found on any path : " + string.Join(", ", notFoundPaths));
             });
-
-        }
-
-        private bool virtualFileExists(string virtualPath)
-        {
-            var exists = false;
-            try
-            {
-                WebPageBase.CreateInstanceFromVirtualPath(virtualPath);
-                exists = true;
-            }
-            catch (Exception)
-            {
-
-            }
-
-            return exists;
 
         }
 
@@ -421,7 +422,7 @@ namespace RazorTemplates
                 if (property != null)
                 {
                     var value = property.GetValue(dynamicModel, null);
-                    result = Render(binder.Name, new[] { value });
+                    result = Render(binder.Name, value);
                     return true;
                 }
             }
